@@ -1,38 +1,65 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-// Импортируйте необходимые стилизованные компоненты
 import { OverlayStyled, ModalStyled } from './Modal.styled';
 
-export class Modal extends React.Component {
-  componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyDown);
-  }
+export const Modal = ({ onClose, children }) => {
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
 
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown);
-  }
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
-  onBackdropClick = e => {
+  const onBackdropClick = e => {
     if (e.target === e.currentTarget) {
-      this.props.onClose();
+      onClose();
     }
   };
 
-  handleKeyDown = e => {
+  const handleKeyDown = e => {
     if (e.key === 'Escape') {
-      this.props.onClose();
+      onClose();
     }
   };
 
-  render() {
-    return (
-      <OverlayStyled onClick={this.onBackdropClick}>
-        <ModalStyled>{this.props.children}</ModalStyled>
-      </OverlayStyled>
-    );
-  }
-}
+  return (
+    <OverlayStyled onClick={onBackdropClick}>
+      <ModalStyled>{children}</ModalStyled>
+    </OverlayStyled>
+  );
+};
+
+// export class Modal extends React.Component {
+//   componentDidMount() {
+//     document.addEventListener('keydown', this.handleKeyDown);
+//   }
+
+//   componentWillUnmount() {
+//     document.removeEventListener('keydown', this.handleKeyDown);
+//   }
+
+//   onBackdropClick = e => {
+//     if (e.target === e.currentTarget) {
+//       this.props.onClose();
+//     }
+//   };
+
+//   handleKeyDown = e => {
+//     if (e.key === 'Escape') {
+//       this.props.onClose();
+//     }
+//   };
+
+//   render() {
+//     return (
+//       <OverlayStyled onClick={this.onBackdropClick}>
+//         <ModalStyled>{this.props.children}</ModalStyled>
+//       </OverlayStyled>
+//     );
+//   }
+// }
 
 Modal.propTypes = {
   onClose: PropTypes.func,
