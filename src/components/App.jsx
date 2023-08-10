@@ -12,7 +12,7 @@ export const App = () => {
   const [q, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [images, setImages] = useState([]);
-  const [disabled, setDisabled] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [totalHits, setTotalHits] = useState(0);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
@@ -75,7 +75,7 @@ export const App = () => {
       )}
 
       {totalHits === images.length ? null : (
-        <Button onLoadMoreClick={handleLoadMore} disabled={disabled} />
+        <Button onLoadMoreClick={handleLoadMore} />
       )}
       {modalOpen && (
         <Modal onClose={handleModalClose}>
