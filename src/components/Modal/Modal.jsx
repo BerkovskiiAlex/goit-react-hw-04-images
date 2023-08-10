@@ -5,6 +5,12 @@ import { OverlayStyled, ModalStyled } from './Modal.styled';
 
 export const Modal = ({ onClose, children }) => {
   useEffect(() => {
+    const handleKeyDown = e => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
     document.addEventListener('keydown', handleKeyDown);
 
     return () => {
@@ -14,12 +20,6 @@ export const Modal = ({ onClose, children }) => {
 
   const onBackdropClick = e => {
     if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
-
-  const handleKeyDown = e => {
-    if (e.key === 'Escape') {
       onClose();
     }
   };
